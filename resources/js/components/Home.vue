@@ -1,7 +1,14 @@
 <template>
-    <div class="container">
-        
-    </div>
+    <v-container>
+        <v-layout>
+            <v-flex xs6>
+                Columna 1
+            </v-flex>
+            <v-flex>
+                Columna 2
+            </v-flex>
+        </v-layout>
+    </v-container>
 </template>
 
 <script>
