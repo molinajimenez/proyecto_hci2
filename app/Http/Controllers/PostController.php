@@ -34,9 +34,26 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        //
+    public function store(Request $request) {
+        if (!$request->title || !$request->content ||
+            !$request->userId) {
+
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Error en petición al servidor.'
+                ], 400);
+        }
+
+        $post = new Post;
+        $post->title = $request->title;
+        $post->content = $request->content;
+        $post->user_id = $request->userId;
+        $post->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Post creado con éxito.'
+        ], 200);
     }
 
     /**
@@ -45,9 +62,12 @@ class PostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function show(Post $post)
-    {
-        //
+    public function show(Post $post) {
+        
+        return response()->json([
+            'success' => true,
+            'post' => $post
+        ], 200);
     }
 
     /**
@@ -56,9 +76,8 @@ class PostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function edit(Post $post)
-    {
-        //
+    public function edit(Post $post) {
+        
     }
 
     /**
@@ -68,9 +87,23 @@ class PostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Post $post)
-    {
-        //
+    public function update(Request $request, Post $post) {
+        if (!$request->title || !$request->content) {
+
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Error en petición al servidor.'
+                ], 400);
+        }
+
+        $post->title = $request->title;
+        $post->content = $request->content;
+        $post->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Post actualizado con éxito.'
+        ], 200);
     }
 
     /**
@@ -79,8 +112,7 @@ class PostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Post $post)
-    {
+    public function destroy(Post $post) {
         //
     }
 }
