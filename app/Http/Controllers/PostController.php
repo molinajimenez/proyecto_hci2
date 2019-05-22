@@ -62,7 +62,8 @@ class PostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request) {
+    public function show(Post $post) {
+        $post->comments;
         
         return response()->json([
             'success' => true,
@@ -139,6 +140,11 @@ class PostController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy(Post $post) {
-        //
+        $post::destroy();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Post eliminado con éxito.'
+        ], 200);
     }
 }
