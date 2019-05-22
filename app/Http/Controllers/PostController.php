@@ -62,7 +62,7 @@ class PostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function show(Post $post) {
+    public function show(Request $request) {
         
         return response()->json([
             'success' => true,
@@ -76,8 +76,34 @@ class PostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function edit(Post $post) {
+    public function edit(Request $request) {
+        $cosa = $request->id;
+        $cosaUser = $request->usuario;
+        //aqui hay condicion and..
+        $toUpdate = Post::where('id', $cosa)->where('user_id', $cosaUser)->first();
         
+        //jalado del objeto
+       
+        $toUpdate->title = $request->titulo;
+        $toUpdate->content = $request->contenido;
+        $toUpdate->save();
+
+        
+       return response()->json([
+        'updated' => 'success',
+        'updated_post' => $toUpdate,
+    ], 200);
+        
+    }
+
+    public function findAll(Request $request){
+       $posts = Post::all();
+
+       return response()->json([
+            'posts' => $posts,
+        ], 200);
+
+
     }
 
     /**
